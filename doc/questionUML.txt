@@ -1,2 +1,37 @@
 Ecrire ici votre réponse à la question UML.
 
+1. other.png
+
+Ce UML structure les événements selon une hiérarchie 
+
+Les avantages:
+
+-Lisibilitée de la structure
+-Données privatisées grâce au readonly
+-Plus simple d’utilisation pour créer d’autre classes en lien avec les autres
+
+Les inconvénients :
+
+-Les objets du modèle sont plus difficilement modifiables, par exemple si on veut passer d’un -événement simple à répétitif, il faut détruire l’objet et recréer un 
+-L’évolution du modèle est difficile
+
+
+2. Agenda.mdj (avant modifications)
+
+Ici, on attache à un événement ses spécifications
+
+Les avantages :
+
+-Chaque classe se gère, ce qui facilite les tests unitaires.
+-Le modèle est plus flexible que le précédent, on peut par exemple rendre un événement répétitif en lui ajoutant l’objet Repetition sans devoir refaire l’objet, c’est plus libre, plus adaptatif que le précédent
+-Visibilitée explicite, on a donc plus de facilité pour sauvegarder l’agenda ou voir ce qui se passe ds le programme
+
+Les inconvénients :
+
+-Plus difficile à initialiser car pour faire un événement répétitif il faut instancier l'événement puis la répétition, puis la terminaison, et tout lier ensemble.
+-La prise en main et navigation est plus longue, pour avoir une information précise il faut traverser plusieurs objets
+-Risque d'incohérence car on  construit l'objet étape par étape, il y a un risque d'avoir un objet qui fonctionne mal ou incomplet si on oublie une étape pendant la configuration.
+
+
+Pour moi, si je dois choisir un des deux modèles UML, le deuxième même si plus compliqué au début est le plus fiable à long terme si notre modèle évolue beaucoup.
+

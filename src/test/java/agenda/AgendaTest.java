@@ -4,8 +4,10 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,6 +71,43 @@ public class AgendaTest {
         assertEquals(4, agenda.eventsInDay(nov_1_2020).size(),
                 "Il y a 4 événements ce jour là");
         assertTrue(agenda.eventsInDay(nov_1_2020).contains(neverEnding));
+        
+    }
+
+    
+//implementations demandée dans les questions complémentaires
+    @Test
+    public void testFindByTitle() {
+        Agenda agenda = new Agenda();
+        Event e1 = new Event("Réunion", LocalDateTime.of(2025, 12, 10, 10, 0), Duration.ofMinutes(60));
+        Event e2 = new Event("Réunion", LocalDateTime.of(2025, 12, 11, 14, 0), Duration.ofMinutes(30));
+        Event e3 = new Event("Déjeuner", LocalDateTime.of(2025, 12, 10, 12, 0), Duration.ofMinutes(45));
+        agenda.addEvent(e1);
+        agenda.addEvent(e2);
+        agenda.addEvent(e3);
+
+        List<Event> result = agenda.findByTitle("Réunion");
+        assertEquals(2, result.size());
+        assertTrue(result.contains(e1));
+        assertTrue(result.contains(e2));
+        assertFalse(result.contains(e3));
+    }
+
+    @Test
+    public void testIsFreeFor() {
+        Agenda agenda = new Agenda();
+        Event e1 = new Event("Réunion", LocalDateTime.of(2025, 12, 10, 10, 0), Duration.ofMinutes(60));
+        Event e2 = new Event("Déjeuner", LocalDateTime.of(2025, 12, 10, 12, 0), Duration.ofMinutes(45));
+        agenda.addEvent(e1);
+        agenda.addEvent(e2);
+
+        // Chevauchement : 10h30–11h30 (e1 occupe 10h–11h)
+        Event conflict = new Event("Appel", LocalDateTime.of(2025, 12, 10, 10, 30), Duration.ofMinutes(60));
+        assertFalse(agenda.isFreeFor(conflict));
+
+        // Pas de chevauchement : 11h30–12h
+        Event free = new Event("Pause", LocalDateTime.of(2025, 12, 10, 11, 30), Duration.ofMinutes(30));
+        assertTrue(agenda.isFreeFor(free));
     }
 
 }
